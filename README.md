@@ -60,7 +60,7 @@ eveshield/
 
 ### Prerequisites
 - Node.js 20+
-- A PostgreSQL database (local Docker container, or a free [Neon](https://neon.tech) project)
+- A PostgreSQL database (a free [Neon](https://neon.tech) project)
 
 ### 1. Backend
 
