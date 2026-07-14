@@ -1,0 +1,45 @@
+version: "3.9"
+
+# Local development stack. In production, the backend targets Render, the
+# frontend targets Vercel, and Postgres targets Neon — see DEPLOYMENT.md.
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: eveshield
+      POSTGRES_PASSWORD: eveshield
+      POSTGRES_DB: eveshield
+    ports:
+      - "5432:5432"
+    volumes:
+      - eveshield_pg_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      CLIENT_URL: http://localhost:5173
+      DATABASE_URL: postgresql://eveshield:eveshield@postgres:5432/eveshield
+      JWT_ACCESS_SECRET: dev_access_secret_change_me
+      JWT_REFRESH_SECRET: dev_refresh_secret_change_me
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:4000/api
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  eveshield_pg_data:
