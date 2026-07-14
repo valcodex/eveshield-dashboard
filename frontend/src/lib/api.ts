@@ -1,6 +1,9 @@
 import axios from "axios";
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
+// Cast defensively: if the ambient ImportMetaEnv augmentation in
+// vite-env.d.ts isn't picked up for any reason (stale type cache, wrong
+// tsconfig include, etc.), this still compiles instead of breaking the build.
+export const API_BASE_URL = (import.meta as unknown as { env: Record<string, string> }).env.VITE_API_URL ?? "http://localhost:4000/api";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
