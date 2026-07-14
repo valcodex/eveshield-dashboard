@@ -342,7 +342,9 @@ export const updateLocation = asyncHandler(async (req: AuthenticatedRequest, res
     });
   }
 
-  broadcast(SOCKET_EVENTS.LOCATION_UPDATED, { victimId, emergencyId, ...location });
+// `location` already contains victimId and emergencyId (they're columns on
+// the Location model), so broadcast it as-is rather than duplicating them.
+broadcast(SOCKET_EVENTS.LOCATION_UPDATED, location);
   broadcast(SOCKET_EVENTS.NOTIFICATION, {
     type: "LOCATION_UPDATED",
     title: "Location updated",
