@@ -10,10 +10,15 @@ import { AuthenticatedRequest } from "../middleware/auth";
 const REFRESH_COOKIE = "eveshield_refresh_token";
 
 function refreshCookieOptions() {
+  // The frontend (Vercel) and backend (Render) live on different domains,
+  // so this cookie is cross-site from the browser's point of view.
+  // SameSite=None is required for the browser to send it at all in that
+  // case, and SameSite=None requires Secure — which is fine since both
+  // Render and Vercel serve everything over HTTPS.
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict" as const,
+    secure: true,
+    sameSite: "none" as const,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: "/api/auth",
   };
@@ -94,7 +99,7 @@ export const logout = asyncHandler(async (req: AuthenticatedRequest, res: Respon
   if (token) {
     await prisma.refreshToken.updateMany({ where: { token }, data: { revoked: true } });
   }
-  res.clearCookie(REFRESH_COOKIE, { path: "/api/auth" });
+ res.clearCookie(REFRESH_COOKIE, { path: "/api/auth", secure: true, sameSite: "none" });
 
   if (req.user) {
     await writeAuditLog({ userId: req.user.id, action: "LOGOUT", ipAddress: req.ip });
