@@ -10,7 +10,7 @@ async function main() {
     where: { email: "admin@eveshield.org" },
     update: {},
     create: {
-      fullName: "Amara Odhiambo",
+      fullName: "Edith Karanja",
       email: "admin@eveshield.org",
       passwordHash: password,
       role: Role.ORG_ADMIN,
@@ -22,7 +22,7 @@ async function main() {
     where: { email: "operator@eveshield.org" },
     update: {},
     create: {
-      fullName: "Brian Mwangi",
+      fullName: "Rooney Wesley",
       email: "operator@eveshield.org",
       passwordHash: password,
       role: Role.ORG_OPERATOR,
@@ -46,7 +46,7 @@ async function main() {
     where: { email: "medic@eveshield.org" },
     update: {},
     create: {
-      fullName: "Nurse Achieng",
+      fullName: "Nurse Mumbi",
       email: "medic@eveshield.org",
       passwordHash: password,
       role: Role.MEDICAL,
