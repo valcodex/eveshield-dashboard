@@ -31,7 +31,13 @@ api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const original = error.config;
-    if (error.response?.status === 401 && !original._retry) {
+    const isRefreshCall = original?.url?.includes("/auth/refresh");
+
+    // Never try to "refresh" in response to the refresh call itself failing —
+    // that's not a stale-session case, it just means there's no valid
+    // session yet (e.g. first visit, or after logout). Let it fail straight
+    // away so the caller can show the login screen instead of hanging.
+    if (error.response?.status === 401 && !original._retry && !isRefreshCall) {
       original._retry = true;
       try {
         refreshPromise ??= api.post("/auth/refresh").then((r) => {
