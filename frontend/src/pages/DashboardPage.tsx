@@ -11,7 +11,7 @@ import LiveLocationMap from "../components/emergency/LiveLocationMap";
 import EmergencyTimeline from "../components/emergency/EmergencyTimeline";
 import ResponseControls from "../components/emergency/ResponseControls";\
 
-import DemoAlertButton from "../components/dashboard/DemoAlertButton";
+
 
 const EMPTY_FILTERS: Filters = { search: "", status: "", priority: "", type: "" };
 
@@ -62,12 +62,8 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-    <StatsCards />
-<div className="flex flex-wrap items-center justify-between gap-3">
-  <div className="flex-1">
-    <FiltersBar filters={filters} onChange={setFilters} />
-  </div>
-  <DemoAlertButton />
+ <StatsCards />
+<FiltersBar filters={filters} onChange={setFilters} />
 </div>>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[380px_1fr]">
