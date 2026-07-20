@@ -9,9 +9,7 @@ import EmergencyFeed from "../components/dashboard/EmergencyFeed";
 import VictimProfileCard from "../components/victim/VictimProfileCard";
 import LiveLocationMap from "../components/emergency/LiveLocationMap";
 import EmergencyTimeline from "../components/emergency/EmergencyTimeline";
-import ResponseControls from "../components/emergency/ResponseControls";\
-
-
+import ResponseControls from "../components/emergency/ResponseControls";
 
 const EMPTY_FILTERS: Filters = { search: "", status: "", priority: "", type: "" };
 
@@ -36,9 +34,6 @@ export default function DashboardPage() {
     refetchInterval: 20000,
   });
 
-  // Live updates: any relevant socket event simply invalidates the queries
-  // so React Query refetches the latest state — keeps the feed, stats, and
-  // selected emergency panel all consistent without manual cache surgery.
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;
@@ -62,9 +57,8 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
- <StatsCards />
-<FiltersBar filters={filters} onChange={setFilters} />
-</div>>
+      <StatsCards />
+      <FiltersBar filters={filters} onChange={setFilters} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[380px_1fr]">
         <div className="h-[70vh]">
