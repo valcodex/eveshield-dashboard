@@ -11,6 +11,8 @@ import LiveLocationMap from "../components/emergency/LiveLocationMap";
 import EmergencyTimeline from "../components/emergency/EmergencyTimeline";
 import ResponseControls from "../components/emergency/ResponseControls";
 
+import LiveTrackerPanel from "../components/dashboard/LiveTrackerPanel";
+
 const EMPTY_FILTERS: Filters = { search: "", status: "", priority: "", type: "" };
 
 export default function DashboardPage() {
@@ -57,8 +59,9 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <StatsCards />
-      <FiltersBar filters={filters} onChange={setFilters} />
+     <StatsCards />
+     <LiveTrackerPanel />
+     <FiltersBar filters={filters} onChange={setFilters} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[380px_1fr]">
         <div className="h-[70vh]">
