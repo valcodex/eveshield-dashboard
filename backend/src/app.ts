@@ -15,6 +15,8 @@ import respondersRoutes from "./routes/responders.routes";
 import notificationsRoutes from "./routes/notifications.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 
+import trackerRoutes from "./routes/tracker.routes";
+
 export function createApp() {
   const app = express();
 
@@ -42,6 +44,8 @@ export function createApp() {
   app.use("/api/responders", respondersRoutes);
   app.use("/api/notifications", notificationsRoutes);
   app.use("/api/dashboard", dashboardRoutes);
+
+  app.use("/api/tracker", trackerRoutes);
 
   // Top-level endpoints called directly by name in the spec
   app.post("/api/assignResponder", ...assignResponderHandler);
