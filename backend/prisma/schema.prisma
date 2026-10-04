@@ -295,3 +295,24 @@ model AuditLog {
   @@index([emergencyId])
   @@map("audit_logs")
 }
+// Read-only mapping to your existing hardware-tracker ingestion table.
+// Prisma never writes to this table — whatever process is decoding and
+// inserting raw device packets keeps doing that independently. We only
+// read the latest packet to show on the dashboard.
+model TrackerPacket {
+  id             BigInt    @id @default(autoincrement())
+  imei           String
+  receivedAt     DateTime? @default(now()) @map("received_at")
+  packetType     String?   @map("packet_type")
+  rawHex         String    @map("raw_hex")
+  latitude       Float?
+  longitude      Float?
+  speed          Int?
+  heading        Int?
+  satellites     Int?
+  battery        Int?
+  signalStrength Int?      @map("signal_strength")
+  decodedAt      DateTime? @map("decoded_at")
+
+  @@map("tracker_packets")
+}
